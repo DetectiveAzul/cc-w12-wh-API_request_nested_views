@@ -8,12 +8,20 @@ const MovieListView = function(element) {
 
 
 MovieListView.prototype.receiveData = function () {
+  this.receiveFilter();
   PubSub.subscribe('MovieData:movies-ready', (event) => {
     //console.log(event.detail);
     this.movies = event.detail;
     this.createMovieViews();
   });
+
 };
+
+MovieListView.prototype.receiveFilter = function() {
+  PubSub.subscribe('MovieFilterView:filtered-director', (event) => {
+    console.log(event.detail);
+  });
+}
 
 MovieListView.prototype.createMovieViews = function () {
   this.clearElement();

@@ -7,7 +7,7 @@ const MovieFilterView = function(element) {
 
 MovieFilterView.prototype.receiveData = function () {
   PubSub.subscribe('MovieData:movies-ready', (event) => {
-    this.populateMenu(event.detail);
+    if (this.populated === false) this.populateMenu(event.detail);
     this.element.addEventListener('change', (event) => {
       PubSub.publish('MovieFilterView:filtered-director', event.target.value);
     });
@@ -19,6 +19,7 @@ MovieFilterView.prototype.populateMenu = function (movieData) {
   filteredOptions.forEach( (director) => {
     this.createOption(director);
   });
+  this.populated = true;
 };
 
 MovieFilterView.prototype.filterOptions = function (movieData) {
