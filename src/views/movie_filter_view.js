@@ -26,9 +26,10 @@ MovieFilterView.prototype.filterOptions = function (movieData) {
   const listOfDirectors = movieData.map( (movie) => {
     return movie.director;
   });
-  return listOfDirectors.filter( (director, position, array) => {
+  const filteredDirectors = listOfDirectors.filter( (director, position, array) => {
     if (position === array.indexOf(director)) return director;
   });
+  return filteredDirectors.sort();
 };
 
 MovieFilterView.prototype.createOption = function(director) {
