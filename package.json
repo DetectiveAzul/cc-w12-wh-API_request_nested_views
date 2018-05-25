@@ -1,0 +1,25 @@
+{
+  "name": "wknd_hmwork",
+  "version": "1.0.0",
+  "description": "### Learning Objectives",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DetectiveAzul/cc-w12-wh-API_request_nested_views.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DetectiveAzul/cc-w12-wh-API_request_nested_views/issues"
+  },
+  "homepage": "https://github.com/DetectiveAzul/cc-w12-wh-API_request_nested_views#readme",
+  "dependencies": {
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.4"
+  }
+}
