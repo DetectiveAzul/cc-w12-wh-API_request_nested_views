@@ -19,10 +19,12 @@ h1 {
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 25px;
+  margin-left: 25px;
+  margin-right: 25px;
 }
 
 #movie {
-  max-width: 20vw;
-  margin: 10px;
+  max-width: 28vw;
+  margin: 20px;
   text-align: center;
 }
