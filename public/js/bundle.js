@@ -133,7 +133,18 @@ eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/he
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst MovieListView = function(element) {\n  this.element = element;\n  this.movies = null;\n}\n\n\nMovieListView.prototype.receiveData = function () {\n  PubSub.subscribe('MovieData:movies-ready', (event) => {\n    //console.log(event.detail);\n    this.movies = event.detail;\n  });\n};\n\n\n\n\nmodule.exports = MovieListView;\n\n\n//# sourceURL=webpack:///./src/views/movie_list_view.js?");
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\nconst MovieView = __webpack_require__(/*! ./movie_view.js */ \"./src/views/movie_view.js\")\n\nconst MovieListView = function(element) {\n  this.element = element;\n  this.movies = null;\n}\n\n\nMovieListView.prototype.receiveData = function () {\n  PubSub.subscribe('MovieData:movies-ready', (event) => {\n    //console.log(event.detail);\n    this.movies = event.detail;\n    this.createMovieViews();\n  });\n};\n\nMovieListView.prototype.createMovieViews = function () {\n  this.movies.forEach((movie) => {\n    this.createMovieView(movie);\n  });\n};\n\nMovieListView.prototype.createMovieView = function (movie) {\n  const movieView = new MovieView(movie);\n  this.element.appendChild (movieView.createElement());\n  console.log('I am a movie', movieView.movie);\n};\n\n\nmodule.exports = MovieListView;\n\n\n//# sourceURL=webpack:///./src/views/movie_list_view.js?");
+
+/***/ }),
+
+/***/ "./src/views/movie_view.js":
+/*!*********************************!*\
+  !*** ./src/views/movie_view.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("const MovieView = function(movie) {\n  this.movie = movie;\n  this.element = null;\n};\n\nMovieView.prototype.createElement = function () {\n  const movieDiv = document.createElement('div');\n  movieDiv.setAttribute('id', 'movie');\n  return this.element = movieDiv;\n};\n\nmodule.exports = MovieView;\n\n\n//# sourceURL=webpack:///./src/views/movie_view.js?");
 
 /***/ })
 
