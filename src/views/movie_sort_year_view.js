@@ -6,7 +6,7 @@ const MovieSortYearView = function(element) {
 
 MovieSortYearView.prototype.bindEvents = function () {
   this.element.addEventListener('click', (event) => {
-    console.log(event.target.id);
+    PubSub.publish('MovieSortView:sort', event.target.id);
   });
 };
 module.exports = MovieSortYearView;

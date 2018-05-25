@@ -5,9 +5,8 @@ const MovieSortTitleView = function(element) {
 };
 
 MovieSortTitleView.prototype.bindEvents = function () {
-  element.addEventListener('click', (event) => {
-    // PubSub.publish('MovieSortTitleView:sort-by-title', event.target.)
-    console.log(event.target.);
+  this.element.addEventListener('click', (event) => {
+    PubSub.publish('MovieSortView:sort', event.target.id);
   });
 };
 
