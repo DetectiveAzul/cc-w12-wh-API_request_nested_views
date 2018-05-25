@@ -89,7 +89,7 @@ eval("module.exports = {\"movieAPI\":\"https://ghibliapi.herokuapp.com/films\"};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const MovieData = __webpack_require__(/*! ./models/movie_data.js */ \"./src/models/movie_data.js\");\nconst MovieListView = __webpack_require__(/*! ./views/movie_list_view.js */ \"./src/views/movie_list_view.js\");\nconst MovieFilterView = __webpack_require__(/*! ./views/movie_filter_view.js */ \"./src/views/movie_filter_view.js\");\n\nconsole.log('JS file loaded');\ndocument.addEventListener('DOMContentLoaded', () => {\n  //console.log('DOM Content loaded');\n  const movieData = new MovieData();\n  movieData.receiveFilter();\n\n  // Start Movie Filter View\n  const movieFilterElement = document.querySelector('#filter-by select');\n  const movieFilterView = new MovieFilterView(movieFilterElement);\n  movieFilterView.receiveData();\n  // Start Movie List View\n  const movieListElement = document.querySelector('div#movie-list');\n  const movieListView = new MovieListView(movieListElement);\n  movieListView.receiveData();\n\n  //Start Model\n  movieData.getData();\n});\n\n\n//# sourceURL=webpack:///./src/app.js?");
+eval("const MovieData = __webpack_require__(/*! ./models/movie_data.js */ \"./src/models/movie_data.js\");\nconst MovieListView = __webpack_require__(/*! ./views/movie_list_view.js */ \"./src/views/movie_list_view.js\");\nconst MovieFilterView = __webpack_require__(/*! ./views/movie_filter_view.js */ \"./src/views/movie_filter_view.js\");\nconst MovieSortYearView = __webpack_require__(/*! ./views/movie_sort_year_view.js */ \"./src/views/movie_sort_year_view.js\");\n\nconsole.log('JS file loaded');\ndocument.addEventListener('DOMContentLoaded', () => {\n  //console.log('DOM Content loaded');\n\n  //Start Model\n  const movieData = new MovieData();\n  movieData.receiveFilter();\n\n  // Start Movie Filter View\n  const movieFilterElement = document.querySelector('#filter-by select');\n  const movieFilterView = new MovieFilterView(movieFilterElement);\n  movieFilterView.receiveData();\n  // Start Movie List View\n  const movieListElement = document.querySelector('div#movie-list');\n  const movieListView = new MovieListView(movieListElement);\n  movieListView.receiveData();\n  // Start Sort Button\n  const yearButtonElement = document.querySelector('#year-sort');\n  const yearButtonView = new MovieSortYearView(yearButtonElement);\n  yearButtonView.bindEvents();\n\n  movieData.getData();\n});\n\n\n//# sourceURL=webpack:///./src/app.js?");
 
 /***/ }),
 
@@ -145,6 +145,17 @@ eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/he
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\nconst MovieView = __webpack_require__(/*! ./movie_view.js */ \"./src/views/movie_view.js\")\n\nconst MovieListView = function(element) {\n  this.element = element;\n  this.movies = null;\n}\n\n\nMovieListView.prototype.receiveData = function () {\n  PubSub.subscribe('MovieData:movies-ready', (event) => {\n    //console.log(event.detail);\n    this.movies = event.detail;\n    this.createMovieViews();\n  });\n\n};\n\nMovieListView.prototype.createMovieViews = function () {\n  this.clearElement();\n  this.movies.forEach((movie) => {\n        const movieView = this.createMovieView(movie);\n        movieView.render();\n  });\n};\n\nMovieListView.prototype.createMovieView = function (movie) {\n  const movieView = new MovieView(movie);\n  this.element.appendChild (movieView.createElement());\n  return movieView;\n};\n\nMovieListView.prototype.clearElement = function() {\n  this.element.innerHTML = '';\n}\n\n\nmodule.exports = MovieListView;\n\n\n//# sourceURL=webpack:///./src/views/movie_list_view.js?");
+
+/***/ }),
+
+/***/ "./src/views/movie_sort_year_view.js":
+/*!*******************************************!*\
+  !*** ./src/views/movie_sort_year_view.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst MovieSortYearView = function(element) {\n  this.element = element;\n};\n\nMovieSortYearView.prototype.bindEvents = function () {\n  this.element.addEventListener('click', (event) => {\n    console.log(event.target.id);\n  });\n};\nmodule.exports = MovieSortYearView;\n\n\n//# sourceURL=webpack:///./src/views/movie_sort_year_view.js?");
 
 /***/ }),
 
