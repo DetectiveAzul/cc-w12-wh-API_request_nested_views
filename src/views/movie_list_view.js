@@ -16,16 +16,22 @@ MovieListView.prototype.receiveData = function () {
 };
 
 MovieListView.prototype.createMovieViews = function () {
+  this.clearElement();
   this.movies.forEach((movie) => {
-    this.createMovieView(movie);
+    const movieView = this.createMovieView(movie);
+    movieView.render();
   });
 };
 
 MovieListView.prototype.createMovieView = function (movie) {
   const movieView = new MovieView(movie);
   this.element.appendChild (movieView.createElement());
-  console.log('I am a movie', movieView.movie);
+  return movieView;
 };
+
+MovieListView.prototype.clearElement = function() {
+  this.element.innerHTML = '';
+}
 
 
 module.exports = MovieListView;

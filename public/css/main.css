@@ -1,0 +1,27 @@
+body {
+  background-color: #d8e2cc;
+}
+
+h1 {
+  font-family: 'Caveat', cursive;
+  font-size: 72px;
+  text-align: center;
+}
+
+.movie-poster {
+  max-width: 250px;
+  max-height: 700px;
+}
+
+#movie-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 25px;
+}
+
+#movie {
+  max-width: 20vw;
+  margin: 10px;
+  text-align: center;
+}
