@@ -89,7 +89,7 @@ eval("module.exports = {\"movieAPI\":\"https://ghibliapi.herokuapp.com/films\"};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const MovieData = __webpack_require__(/*! ./models/movie_data.js */ \"./src/models/movie_data.js\");\nconst MovieListView = __webpack_require__(/*! ./views/movie_list_view.js */ \"./src/views/movie_list_view.js\");\n\nconsole.log('JS file loaded');\ndocument.addEventListener('DOMContentLoaded', () => {\n  //console.log('DOM Content loaded');\n  // Start Movie ListView\n  const movieListElement = document.querySelector('div#movie-list');\n  const movieListView = new MovieListView(movieListElement);\n  movieListView.receiveData();\n  \n  //Start Model\n  const movieData = new MovieData();\n  movieData.getData();\n});\n\n\n//# sourceURL=webpack:///./src/app.js?");
+eval("const MovieData = __webpack_require__(/*! ./models/movie_data.js */ \"./src/models/movie_data.js\");\nconst MovieListView = __webpack_require__(/*! ./views/movie_list_view.js */ \"./src/views/movie_list_view.js\");\nconst MovieFilterView = __webpack_require__(/*! ./views/movie_filter_view.js */ \"./src/views/movie_filter_view.js\");\n\nconsole.log('JS file loaded');\ndocument.addEventListener('DOMContentLoaded', () => {\n  //console.log('DOM Content loaded');\n\n  // Start Movie Filter View\n  const movieFilterElement = document.querySelector('#filter-by select');\n  const movieFilterView = new MovieFilterView(movieFilterElement);\n  movieFilterView.receiveData();\n  // Start Movie List View\n  const movieListElement = document.querySelector('div#movie-list');\n  const movieListView = new MovieListView(movieListElement);\n  movieListView.receiveData();\n\n  //Start Model\n  const movieData = new MovieData();\n  movieData.getData();\n});\n\n\n//# sourceURL=webpack:///./src/app.js?");
 
 /***/ }),
 
@@ -123,6 +123,17 @@ eval("const Request = function (url) {\n  this.url = url\n}\n\nRequest.prototype
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\nconst Request = __webpack_require__(/*! ../helpers/request_helper.js */ \"./src/helpers/request_helper.js\");\nconst config = __webpack_require__(/*! ../../config.json */ \"./config.json\");\n\nconst MovieData = function() {\n\n}\n\nMovieData.prototype.getData = function () {\n  const request = new Request(config.movieAPI);\n  request.get( (movieData) => {\n    //console.log(movieData);\n    PubSub.publish('MovieData:movies-ready', movieData);\n  });\n};\n\n\nmodule.exports = MovieData;\n\n\n//# sourceURL=webpack:///./src/models/movie_data.js?");
+
+/***/ }),
+
+/***/ "./src/views/movie_filter_view.js":
+/*!****************************************!*\
+  !*** ./src/views/movie_filter_view.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const PubSub = __webpack_require__(/*! ../helpers/pub_sub.js */ \"./src/helpers/pub_sub.js\");\n\nconst MovieFilterView = function(element) {\n  this.element = element;\n  this.populated = false;\n};\n\nMovieFilterView.prototype.receiveData = function () {\n  PubSub.subscribe('MovieData:movies-ready', (event) => {\n    this.populateMenu(event.detail);\n    this.element.addEventListener('change', (event) => {\n      PubSub.publish('MovieFilterView:filtered-director', event.target.value);\n    });\n  });\n};\n\nMovieFilterView.prototype.populateMenu = function (movieData) {\n  const filteredOptions = this.filterOptions(movieData);\n  filteredOptions.forEach( (director) => {\n    this.createOption(director);\n  });\n};\n\nMovieFilterView.prototype.filterOptions = function (movieData) {\n  const listOfDirectors = movieData.map( (movie) => {\n    return movie.director;\n  });\n  return listOfDirectors.filter( (director, position, array) => {\n    if (position === array.indexOf(director)) return director;\n  });\n};\n\nMovieFilterView.prototype.createOption = function(director) {\n  const option = document.createElement('option');\n  option.value = director;\n  option.textContent = director;\n  this.element.appendChild(option);\n};\n\nmodule.exports = MovieFilterView;\n\n\n//# sourceURL=webpack:///./src/views/movie_filter_view.js?");
 
 /***/ }),
 
