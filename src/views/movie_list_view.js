@@ -8,7 +8,6 @@ const MovieListView = function(element) {
 
 
 MovieListView.prototype.receiveData = function () {
-  this.receiveFilter();
   PubSub.subscribe('MovieData:movies-ready', (event) => {
     //console.log(event.detail);
     this.movies = event.detail;
@@ -17,17 +16,11 @@ MovieListView.prototype.receiveData = function () {
 
 };
 
-MovieListView.prototype.receiveFilter = function() {
-  PubSub.subscribe('MovieFilterView:filtered-director', (event) => {
-    console.log(event.detail);
-  });
-}
-
 MovieListView.prototype.createMovieViews = function () {
   this.clearElement();
   this.movies.forEach((movie) => {
-    const movieView = this.createMovieView(movie);
-    movieView.render();
+        const movieView = this.createMovieView(movie);
+        movieView.render();
   });
 };
 

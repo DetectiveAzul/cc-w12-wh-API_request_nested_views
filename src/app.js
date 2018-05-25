@@ -5,6 +5,8 @@ const MovieFilterView = require('./views/movie_filter_view.js');
 console.log('JS file loaded');
 document.addEventListener('DOMContentLoaded', () => {
   //console.log('DOM Content loaded');
+  const movieData = new MovieData();
+  movieData.receiveFilter();
 
   // Start Movie Filter View
   const movieFilterElement = document.querySelector('#filter-by select');
@@ -16,6 +18,5 @@ document.addEventListener('DOMContentLoaded', () => {
   movieListView.receiveData();
 
   //Start Model
-  const movieData = new MovieData();
   movieData.getData();
 });
