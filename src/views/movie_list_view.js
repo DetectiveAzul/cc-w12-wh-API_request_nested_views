@@ -13,13 +13,14 @@ MovieListView.prototype.receiveData = function () {
     this.movies = event.detail;
     this.createMovieViews();
   });
+
 };
 
 MovieListView.prototype.createMovieViews = function () {
   this.clearElement();
   this.movies.forEach((movie) => {
-    const movieView = this.createMovieView(movie);
-    movieView.render();
+        const movieView = this.createMovieView(movie);
+        movieView.render();
   });
 };
 
