@@ -16,8 +16,6 @@ MovieView.prototype.render = function() {
   this.renderHTMLElement('p', 'movie-description', 'description');
 };
 
-
-
 MovieView.prototype.renderHTMLElement = function(elementType, htmlClass, content) {
   const element = document.createElement(elementType);
   element.classList.add(htmlClass);
